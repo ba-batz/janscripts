@@ -79,6 +79,7 @@ ln -sfT dash /usr/bin/sh
 # Update microcode
 #pacman -S --noconfirm intel-ucode
 pacman -S --noconfirm amd-ucode
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # Make updates automatic
 echo "pacman -Scc --noconfirm && pacman -Syu --noconfirm &" >> /etc/xprofile
