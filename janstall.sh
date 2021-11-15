@@ -89,3 +89,6 @@ pacman -S --noconfirm noto-fonts noto-fonts-cjk noto-fonts-emoji ttc-iosevka ttf
 
 # Minecraft
 pacman -S --noconfirm gamemode gnome-keyring orca minecraft-launcher
+
+# Prepare for manual instalation
+mv ./xfce.sh /home/$NAMEUSER/ 
