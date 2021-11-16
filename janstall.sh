@@ -30,10 +30,13 @@ echo "$NAMEHOST" > /etc/hostname
 mv ./hosts /etc/hosts 
 sed -i "s/myhostname/$NAMEHOST/g" /etc/hosts
 
+pacman -S --noconfirm dhcpcd
 
+#pacman -Syu --noconfirm networkmanager networkmanager-s6 network-manager-applet
+#s6-rc-bundle-update -c /etc/s6/rc/compiled add default NetworkManager
 
-pacman -Syu --noconfirm networkmanager networkmanager-s6
-s6-rc-bundle-update -c /etc/s6/rc/compiled add default NetworkManager
+pacman -S connman-s6 connman-gtk
+s6-rc-bundle-update -c /etc/s6/rc/compiled add default connmand
 
 # Xorg
 pacman -S --noconfirm xorg
@@ -50,7 +53,7 @@ mv ./pacman.conf /etc/pacman.conf
 mv ./makepkg.conf /etc/makepkg.conf
 
 # Desktop Enviroment
-pacman -Syu --noconfirm xfce4 xfce4-goodies network-manager-applet
+pacman -Syu --noconfirm xfce4 xfce4-goodies
 
 # Other startup Services
 pacman -S --noconfirm tlp tlp-s6 lightdm lightdm-s6 backlight-s6
@@ -83,12 +86,14 @@ ln -sfT dash /usr/bin/sh
 # Update microcode
 pacman -S --noconfirm intel-ucode
 #pacman -S --noconfirm amd-ucode
+
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Setup touchpad
 mv ./30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 
-
+# Usb mounting automatic
+pacman -S --noconfirm udisks2 gvfs
 
 # Make updates automatic
 echo "sleep 2m && pacman -Scc --noconfirm && pacman -Syu --noconfirm &" >> /etc/xprofile
