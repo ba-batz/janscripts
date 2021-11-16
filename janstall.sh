@@ -96,7 +96,9 @@ mv ./30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 pacman -S --noconfirm udisks2 gvfs
 
 # Make updates automatic
-echo "sleep 2m && pacman -Scc --noconfirm && pacman -Syu --noconfirm &" >> /etc/xprofile
+echo 'sleep 2m
+pacman -Scc --noconfirm
+pacman -Syu --noconfirm' >> /etc/xprofile
 
 # Fonts
 pacman -S --noconfirm noto-fonts noto-fonts-cjk noto-fonts-emoji ttc-iosevka ttf-dejavu ttf-ms-fonts ttf-nerd-fonts-symbols ttf-roboto-mono otf-fira-sans ttf-ms-fonts
