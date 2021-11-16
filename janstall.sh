@@ -50,7 +50,7 @@ mv ./pacman.conf /etc/pacman.conf
 mv ./makepkg.conf /etc/makepkg.conf
 
 # Desktop Enviroment
-pacman -Syu --noconfirm xfce4 xfce4-goodies
+pacman -Syu --noconfirm xfce4 xfce4-goodies network-manager-applet
 
 # Other startup Services
 pacman -S --noconfirm tlp tlp-s6 lightdm lightdm-s6 backlight-s6
@@ -61,7 +61,7 @@ s6-rc-bundle-update add default backlight
 # Replace sudo with doas
 pacman -Rns --noconfirm sudo
 pacman -Syu --noconfirm doas
-ln -sfT doas /usr/local/bin/sudo
+ln -sf /usr/bin/doas /usr/local/bin/sudo
 mv ./doas.conf /etc/doas.conf
 
 # Themeing Desktop
@@ -88,8 +88,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # Setup touchpad
 mv ./30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 
+
+
 # Make updates automatic
-echo "pacman -Scc --noconfirm && pacman -Syu --noconfirm &" >> /etc/xprofile
+echo "sleep 2m && pacman -Scc --noconfirm && pacman -Syu --noconfirm &" >> /etc/xprofile
 
 # Fonts
 pacman -S --noconfirm noto-fonts noto-fonts-cjk noto-fonts-emoji ttc-iosevka ttf-dejavu ttf-ms-fonts ttf-nerd-fonts-symbols ttf-roboto-mono otf-fira-sans ttf-ms-fonts
