@@ -18,10 +18,10 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Add user(s)
-echo "root password: "
+echo "root password"
 passwd
 
-echo "user password: "
+echo "user password"
 useradd -m -G games,wheel,video,dbus "$NAMEUSER"
 passwd "$NAMEUSER"
 
@@ -68,9 +68,8 @@ ln -sf /usr/bin/doas /usr/local/bin/sudo
 mv ./doas.conf /etc/doas.conf
 
 # Themeing Desktop
-pacman -S --noconfirm  papirus-icon-theme
-pacman -S --noconfirm lightdm-gtk-greeter
-
+pacman -S --noconfirm papirus-icon-theme
+pacman -S --noconfirm lightdm-slick-greeter
 
 # Graphics
 pacman -S --noconfirm xf86-video-intel mesa libva libva-intel-driver vulkan-intel
@@ -87,8 +86,6 @@ ln -sfT dash /usr/bin/sh
 pacman -S --noconfirm intel-ucode
 #pacman -S --noconfirm amd-ucode
 
-grub-mkconfig -o /boot/grub/grub.cfg
-
 # Setup touchpad
 mv ./30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 
@@ -96,17 +93,16 @@ mv ./30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
 pacman -S --noconfirm udisks2 gvfs
 
 # Make updates automatic
-echo 'sleep 2m
+echo '$(sleep 2m
 doas pacman -Scc --noconfirm
-doas pacman -Syu --noconfirm' >> /etc/xprofile
+doas pacman -Syu --noconfirm
+exit) &' >> /etc/xprofile
 
 # Fonts
 pacman -S --noconfirm noto-fonts noto-fonts-cjk noto-fonts-emoji ttc-iosevka ttf-dejavu ttf-ms-fonts ttf-nerd-fonts-symbols ttf-roboto-mono otf-fira-sans ttf-ms-fonts
 
-
 # Minecraft
 pacman -S --noconfirm gamemode gnome-keyring orca minecraft-launcher
-
 
 # Prepare for manual instalation
 mv ./xfce.sh /home/$NAMEUSER/
